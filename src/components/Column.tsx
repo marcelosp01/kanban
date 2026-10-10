@@ -12,6 +12,7 @@ type Props = {
   draggingCardId: string | null;
   isDragOver: boolean;
   onDragOver: (column: ColumnId) => void;
+  onEdit: (card: Card) => void;
 };
 
 export default function Column({
@@ -25,6 +26,7 @@ export default function Column({
   draggingCardId,
   isDragOver,
   onDragOver,
+  onEdit,
 }: Props) {
   return (
     <div
@@ -57,6 +59,7 @@ export default function Column({
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             dragging={draggingCardId === card.id}
+            onEdit={onEdit}
           />
         ))}
       </div>
