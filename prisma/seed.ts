@@ -11,8 +11,19 @@ async function main() {
     return;
   }
 
+  const board = await prisma.board.upsert({
+    where: { id: "seed-default-board" },
+    update: {},
+    create: {
+      id: "seed-default-board",
+      name: "Quadro Kanban",
+      ownerEmail: "marcelo.silvapereira@gmail.com",
+    },
+  });
+
   await prisma.card.create({
     data: {
+      boardId: board.id,
       title,
       description:
         "Visualizar um quadro Kanban com as colunas To Do, Doing, Testing e Done, com botão para adicionar cards (título, descrição, data de criação, previsão de conclusão, esforço e owners).",

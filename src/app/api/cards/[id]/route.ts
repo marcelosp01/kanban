@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { COLUMNS, EFFORTS, ColumnId, Effort } from "@/lib/types";
+import { getCurrentEmail } from "@/lib/session";
+import { getBoardAccess } from "@/lib/boards";
 
 type CardUpdateData = Partial<{
   title: string;
@@ -15,7 +17,22 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const email = await getCurrentEmail();
+  if (!email) {
+    return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+  }
+
   const { id } = await params;
+
+  const existing = await prisma.card.findUnique({ where: { id } });
+  if (!existing) {
+    return NextResponse.json({ error: "Card não encontrado" }, { status: 404 });
+  }
+  const access = await getBoardAccess(existing.boardId, email);
+  if (!access) {
+    return NextResponse.json({ error: "Card não encontrado" }, { status: 404 });
+  }
+
   const body = await request.json();
   const { title, description, column, dueDate, effort, owners } = body;
 

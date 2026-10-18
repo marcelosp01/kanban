@@ -1,6 +1,6 @@
 # Kanban
 
-A simple Kanban board (To Do / Doing / Testing / Done) built with Next.js, TypeScript, and Prisma.
+A simple Kanban board (To Do / Doing / Testing / Done) built with Next.js, TypeScript, and Prisma. Supports multiple boards per user with email-based sign-in (no password) and board sharing via collaborator invites.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
