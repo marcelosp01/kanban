@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, ColumnId, EFFORTS, Effort } from "@/lib/types";
 
 type Props = {
+  boardId: string;
   column: ColumnId;
   columnLabel: string;
   onClose: () => void;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function AddCardModal({
+  boardId,
   column,
   columnLabel,
   onClose,
@@ -37,6 +39,7 @@ export default function AddCardModal({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          boardId,
           title,
           description,
           column,

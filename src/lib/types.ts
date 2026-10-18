@@ -17,6 +17,7 @@ export type Effort = (typeof EFFORTS)[number]["id"];
 
 export type Card = {
   id: string;
+  boardId: string;
   title: string;
   description: string | null;
   column: ColumnId;
@@ -24,4 +25,23 @@ export type Card = {
   dueDate: string | null;
   effort: Effort;
   owners: string;
+};
+
+export type Board = {
+  id: string;
+  name: string;
+  ownerEmail: string;
+  createdAt: string;
+};
+
+export type BoardCollaborator = {
+  id: string;
+  boardId: string;
+  email: string;
+  createdAt: string;
+};
+
+export type BoardSummary = Board & {
+  isOwner: boolean;
+  cardCount: number;
 };

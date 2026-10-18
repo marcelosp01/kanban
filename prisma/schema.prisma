@@ -20,8 +20,29 @@ enum Effort {
   LARGE
 }
 
+model Board {
+  id            String              @id @default(cuid())
+  name          String
+  ownerEmail    String
+  createdAt     DateTime            @default(now())
+  cards         Card[]
+  collaborators BoardCollaborator[]
+}
+
+model BoardCollaborator {
+  id        String   @id @default(cuid())
+  boardId   String
+  email     String
+  createdAt DateTime @default(now())
+  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@unique([boardId, email])
+}
+
 model Card {
   id          String    @id @default(cuid())
+  boardId     String
+  board       Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
   title       String
   description String?
   column      ColumnId  @default(TODO)
